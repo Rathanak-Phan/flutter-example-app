@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               ElevatedButton(
                 onPressed: () {
-                  if (email.text.endsWith("ex@gmail.com") &&
+                  if (email.text.endsWith("name") &&
                       password.text.endsWith("123")) {
                     Navigator.pushReplacement(
                       context,
@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 121, 192, 29),
+                  backgroundColor: const Color.fromARGB(255, 71, 198, 143),
                   padding: const EdgeInsets.symmetric(
                     vertical: 18,
                   ), 
