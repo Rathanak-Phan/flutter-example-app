@@ -55,107 +55,115 @@ class _StartScreenState extends State<StartScreen>
               ),
             ),
             child: SafeArea(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Animated App Logo
-                  AnimatedScale(
-                    scale: 1.2,
-                    duration: const Duration(seconds: 2),
-                    curve: Curves.easeInOut,
-                    child: const Icon(
-                      Icons.flutter_dash,
-                      size: 120,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-
-                  // App Title with Fade + Slide
-                  TweenAnimationBuilder(
-                    tween: Tween<double>(begin: 0, end: 1),
-                    duration: const Duration(seconds: 2),
-                    builder: (context, value, child) {
-                      return Opacity(
-                        opacity: value,
-                        child: Transform.translate(
-                          offset: Offset(0, (1 - value) * 20),
-                          child: child,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Animated App Logo with Hero
+                    Hero(
+                      tag: "app_logo",
+                      child: ScaleTransition(
+                        scale: Tween(begin: 0.9, end: 1.1)
+                            .animate(CurvedAnimation(
+                          parent: _controller,
+                          curve: Curves.easeInOut,
+                        )),
+                        child: const Icon(
+                          Icons.flutter_dash,
+                          size: 120,
+                          color: Colors.white,
                         ),
-                      );
-                    },
-                    child: Text(
-                      "Welcome to QuizApp",
-                      style: Theme.of(context).textTheme.headlineMedium
-                          ?.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                      textAlign: TextAlign.center,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
+                    const SizedBox(height: 30),
 
-                  Text(
-                    "Your journey starts here 🚀",
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyLarge?.copyWith(color: Colors.white70),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 50),
-
-                  // Gradient Button with ripple
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomeScreen(),
-                        ),
-                      );
-                    },
-                    style:
-                        ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 50,
-                            vertical: 28,
+                    // App Title with Fade + Slide
+                    TweenAnimationBuilder(
+                      tween: Tween<double>(begin: 0, end: 1),
+                      duration: const Duration(seconds: 2),
+                      builder: (context, value, child) {
+                        return Opacity(
+                          opacity: value,
+                          child: Transform.translate(
+                            offset: Offset(0, (1 - value) * 20),
+                            child: child,
                           ),
+                        );
+                      },
+                      child: Text(
+                        "Welcome to QuizApp",
+                        style: Theme.of(context).textTheme.headlineMedium
+                            ?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.2,
+                            ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+
+                    // Subtitle
+                    FadeTransition(
+                      opacity: _controller.drive(Tween(begin: 0.3, end: 1.0)),
+                      child: Text(
+                        "Your journey starts here 🚀",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge
+                            ?.copyWith(color: Colors.white70),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(height: 60),
+
+                    // Gradient Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.zero,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(40),
                           ),
-                          elevation: 10,
-                          backgroundColor: const Color.fromARGB(0, 79, 239, 51),
-                          shadowColor: const Color.fromARGB(137, 231, 47, 241),
-                        ).copyWith(
-                          backgroundColor: MaterialStateProperty.all(
-                            const Color.fromARGB(0, 90, 226, 140),
+                          elevation: 6,
+                          shadowColor: Colors.black45,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomeScreen(),
+                            ),
+                          );
+                        },
+                        child: Ink(
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [Colors.white, Colors.blueAccent],
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                            ),
+                            borderRadius: BorderRadius.circular(40),
                           ),
-                        ),
-                    child: Ink(
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Colors.white, Colors.blueAccent],
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                        ),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      child: Container(
-                        height: 48,
-                        alignment: Alignment.center,
-                        child: const Text(
-                          "Get Started",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black87,
+                          child: Container(
+                            height: 50,
+                            alignment: Alignment.center,
+                            child: const Text(
+                              "Get Started",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
